@@ -1,32 +1,20 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import "./App.css";
 import * as tf from "@tensorflow/tfjs";
 import * as handpose from "@tensorflow-models/handpose";
 import * as fp from "fingerpose";
 import Webcam from "react-webcam";
 import { drawHand } from "./neuraldraw";
-import Paper from "@mui/material/Paper";
-import Button from '@mui/material/Button';
-// import DeleteIcon from '@mui/icons-material/Delete';
 import victory from "./victory.png";
 import thumbs_up from "./thumbs_up.png";
 
 function App() {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
-
+  
   const [emoji, setEmoji] = useState(null);
   const images = { thumbs_up: thumbs_up, victory: victory };
-
-  const runHandpose = async () => {
-    const net = await handpose.load();
-    // console.log("Handpose model loaded.");
-    setInterval(() => {
-      prediction(net);
-    }, 100);
-  };
-
-  const prediction = async (net) => {
+  const prediction = useCallback(async (net) => {
     if (
       typeof webcamRef.current !== "undefined" &&
       webcamRef.current !== null &&
@@ -64,20 +52,29 @@ function App() {
       const ctx = canvasRef.current.getContext("2d");
       drawHand(hand, ctx);
     }
-  };
+  },[emoji]);
+  const runHandpose = useCallback(async () => {
+    const net = await handpose.load();
+    // console.log("Handpose model loaded.");
+    setInterval(() => {
+      prediction(net);
+    }, 100);
+  },[prediction]);
+
+  
   useEffect(() => {
     runHandpose();
-  }, []);
+  }, [runHandpose]);
   return (
     <div className="App">
     <header className="App-header">
   
-      {/* className="styledcompo" */}
         <Webcam ref={webcamRef}  className="styledcompo" />
         <canvas ref={canvasRef}  className="styledcompo" />
       
       {emoji !== null ? (
           <img
+          alt="emoji"
             src={images[emoji]}
             style={{
               position: "absolute",
@@ -94,11 +91,7 @@ function App() {
           ""
         )}
         </header>
-      {/* <Paper variant="outlined"  elevation={8} className="feature">
-      <Button variant="outlined">
-        Delete
-      </Button>
-      </Paper> */}
+    
     </div>
   );
 }
