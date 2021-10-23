@@ -18,7 +18,7 @@ function App() {
     if (
       typeof webcamRef.current !== "undefined" &&
       webcamRef.current !== null &&
-      webcamRef.current.video.readyState === 4
+      webcamRef.current.video.readyState === 4 && tf !== null 
     ) {
       const video = webcamRef.current.video;
       const videoWidth = webcamRef.current.video.videoWidth;
