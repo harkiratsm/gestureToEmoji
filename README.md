@@ -1,3 +1,16 @@
+# Smart Classroom [🔗](https://hackthisfall2-0.vercel.app/)
+
+### Built With
+- fingerpose 
+- react
+- tensorflowjs
+
+### Screenshots 
+![gallery](https://user-images.githubusercontent.com/71957674/165063673-fcf7f69f-cf9f-442c-b727-822e4b7269b2.jpg)
+
+![gallery (1)](https://user-images.githubusercontent.com/71957674/165063717-19d1c45b-8561-4abd-bb5e-9cf7cc678233.jpg)
+
+
 ### Inspiration
 As we all know about the Covid scenario , there was a shift towards this online platforms like Zoom , microsoft teams , Gmeet , etc .
 
